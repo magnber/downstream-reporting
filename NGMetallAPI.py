@@ -1,5 +1,5 @@
 from dataclasses import dataclass, asdict
-from typing import List, Dict
+from typing import List
 import csv
 import json
 
