@@ -3,6 +3,7 @@ from typing import List, Dict
 import csv
 import json
 
+### Data models:
 @dataclass
 class Material:
     code: str
@@ -14,31 +15,41 @@ class Facility:
     name: str
     location: str
 
+# MaterialTransformation represents is a mapping of input to output materials. From a production perspective this is similar to a BOM (bill of materials)
+# Each input material mapped to one or more output materials. 
+# Yield is the fraction of output_material we get from an input material - this should sum to 1 (or 100%)
+# Category us the category of the output material. 
+# Category is what we ultimately want to report on to the customer, but the output material dist is needed to calculate the generated emissions a recycled metal creates.
 @dataclass
 class MaterialTransformation:
     facility_id: str
-    input_material_code: str
-    output_material_code: str
-    percentage: float
-    category: str
+    input_material_code: str # one line per input material
+    output_material_code: str # the output material
+    percentage: float # a group on input_material should sum percentage to 1 (100%)
+    category: str  # 'Material Recycling', 'Energy Recycling', 'Losses'
 
+# Emission factor per material per facility - denoted in kg CO2e used per tonn processed
 @dataclass
 class EmissionFactorProcessing:
     facility_id: str
     material_code: str
     emission_factor: float  # kg CO2e per tonne processed
 
+# estimated geografical downstream output per material code - what countries buys our goods?
+# one output material can be sold to multiple countries - group on output_material_code sum percentage should be 1 (or 100%).
 @dataclass
 class EstimatedOutputDistributionGeo:
     output_material_code: str
     destination_country: str
-    percentage: float
+    percentage: float  # The percentage that goes to one specific country. A group on output_material_code should sum this to 1 (100%)
 
+# Factors for transportation emissions per type of transport
 @dataclass
 class TransportEmissionFactor:
     mode_of_transport: str
     emission_factor: float  # kg CO2e per tonne-km
 
+# Average for downstream - used to calculate distances from facilites to downstream customers / countries
 @dataclass
 class AverageDownstreamDistances:
     facility_id: str
@@ -46,6 +57,7 @@ class AverageDownstreamDistances:
     average_distance: float  # km
     mode_of_transport: str
 
+# Average distance for upstream - used to calculate distances from customers to facilites
 @dataclass
 class AverageUpstreamDistances:
     customer_id: str
@@ -53,16 +65,19 @@ class AverageUpstreamDistances:
     inbound_average_distance: float  # km
     inbound_mode_of_transport: str
 
+# benchmarks for virgin produced metals
 @dataclass
 class VirginMaterialProductionBenchmark:
     material_code: str
     emissions: float  # kg CO2e per tonne produced
 
+# Lookup / aggregation for countries to region
 @dataclass
 class GeographicRegion:
     country: str
     region: str
 
+# Customer invoice - input data
 @dataclass
 class Invoice:
     invoice_id: str
@@ -72,25 +87,27 @@ class Invoice:
     material_code: str
     volume: float
 
+# output data
 @dataclass
 class RecyclingReport:
-    invoice_id: str  # The invoice the report is calculated from
+    invoice_id: str # The invoice the report is calculated from
     customer_id: str
     delivery_date: str
     facility_id: str
-    input_material_code: str  # received material
-    output_material_code: str  # the output material
-    category: str  # the output material category
-    volume_delivered: float  # the volume of the input material
-    output_volume: float  # volume of the output material
-    processing_emissions: float  # processing emissions attributed to the output material (kg CO2e)
-    inbound_transport_emissions: float  # transport emission from upstream to facility (kg CO2e)
-    outbound_transport_emissions: float  # transport emission to downstream customer (kg CO2e)
-    total_transport_emissions: float  # sum of inbound and outbound emissions
-    production_benchmark_emissions: float  # Benchmark for output material
-    destination_country: str  # country the output is sold to
-    destination_volume: float  # the volume shipped to this country
+    input_material_code: str # received material
+    output_material_code: str # the output material 
+    category: str # the output material category
+    volume_delivered: float # the volume of the input material
+    output_volume: float # volume of the output material
+    processing_emissions: float # processing emissions attributed to the output material (kg co2e)
+    inbound_transport_emissions: float # transport emission from upstream to facility (kg co2e)
+    outbound_transport_emissions: float # transport emission from facility to downstream customer (kg co2e)
+    total_transport_emissions: float # sum emissions
+    production_benchmark_emissions: float # Benchmark for output material 
+    destination_country: str # country the output is sold to
+    destination_volume: float # the percent out the output that is shipped to this country * the output_volume
 
+    
 class NGMetallAPI:
     def __init__(self):
         # Load data from CSV files into data structures
