@@ -1,0 +1,5 @@
+mode_of_transport,emission_factor
+Road,0.10
+Rail,0.05
+Sea,0.02
+Air,0.50

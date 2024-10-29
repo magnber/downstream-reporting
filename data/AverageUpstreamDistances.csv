@@ -1,0 +1,5 @@
+customer_id,facility_id,inbound_average_distance,inbound_mode_of_transport
+C001,F001,200,Road
+C002,F001,500,Rail
+C003,F002,400,Road
+C004,F003,800,Sea

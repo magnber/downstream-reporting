@@ -1,0 +1,6 @@
+facility_id,material_code,emission_factor
+F001,M001,50.0
+F001,M002,60.0
+F002,M001,55.0
+F002,M002,65.0
+F003,M003,70.0

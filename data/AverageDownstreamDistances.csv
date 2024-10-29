@@ -1,0 +1,7 @@
+facility_id,destination_country,average_distance,mode_of_transport
+F001,Germany,300,Road
+F001,France,800,Road
+F001,Italy,1200,Rail
+F002,Spain,500,Road
+F002,Portugal,700,Road
+F003,UK,1500,Sea

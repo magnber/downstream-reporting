@@ -1,0 +1,13 @@
+facility_id,input_material_code,output_material_code,percentage,category
+F001,M001,M101,0.70,Material Recycling
+F001,M001,M102,0.10,Material Recycling
+F001,M001,M201,0.15,Energy Recycling
+F001,M001,M301,0.05,Losses
+
+
+
+F002,M002,M102,0.85,Material Recycling
+F002,M002,M202,0.10,Energy Recycling
+F002,M002,M302,0.05,Losses
+F003,M003,M103,0.90,Material Recycling
+F003,M003,M303,0.10,Losses

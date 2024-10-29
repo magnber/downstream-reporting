@@ -1,0 +1,7 @@
+output_material_code,destination_country,percentage
+M101,Germany,0.50
+M101,France,0.30
+M101,Italy,0.20
+M102,Spain,0.60
+M102,Portugal,0.40
+M103,UK,1.00
