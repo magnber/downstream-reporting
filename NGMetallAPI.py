@@ -107,7 +107,7 @@ class RecyclingReport:
     destination_country: str # country the output is sold to
     destination_volume: float # the percent out the output that is shipped to this country * the output_volume
 
-    
+
 class NGMetallAPI:
     def __init__(self):
         # Load data from CSV files into data structures
@@ -284,16 +284,15 @@ class NGMetallAPI:
     def get_downstream_distance(self, facility_id, destination_country):
         return self.downstream_distance_index.get((facility_id, destination_country))
 
-# Example usage:
-api = NGMetallAPI()
-invoices = [Invoice(invoice_id='INV001', customer_id='Supplier001', delivery_date='2023-10-01', facility_id='F001', material_code='M001', volume=6000.0)]
-reports = api.calculate_recycling_report(invoices)
 
-# Convert reports to dictionaries
-reports_dict = [asdict(report) for report in reports]
 
-# Write to a JSON file
-with open('output/recycling_reports.json', 'w', encoding='utf-8') as json_file:
-    json.dump(reports_dict, json_file, ensure_ascii=False, indent=4)
+if __name__ == "__main__":
+    api = NGMetallAPI()
+    invoices = [Invoice(invoice_id='INV001', customer_id='Supplier001', delivery_date='2023-10-01', facility_id='F001', material_code='M001', volume=6000.0)]
+    reports = api.calculate_recycling_report(invoices)
 
-print("Reports have been written to 'recycling_reports.json'")
+    reports_dict = [asdict(report) for report in reports]
+    with open('output/recycling_reports.json', 'w', encoding='utf-8') as json_file:
+        json.dump(reports_dict, json_file, ensure_ascii=False, indent=4)
+
+    print("Reports have been written to 'recycling_reports.json'")
