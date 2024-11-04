@@ -72,11 +72,3 @@ Denne koden er utviklet for å beregne nedstrømsrapportering basert på NG Meta
 - **Opprette rapporter**: For disse materialene opprettes rapporter som inkluderer relevante data, men med nedstrøms felter satt til null eller "N/A".
 """
 
-# Define the file path
-file_path = '/mnt/data/nedstromsrapportering_ng_metall.md'
-
-# Write the markdown content to the file
-with open(file_path, 'w') as file:
-    file.write(markdown_content)
-
-file_path
